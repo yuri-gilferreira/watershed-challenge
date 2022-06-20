@@ -156,9 +156,9 @@ If you plot the average `flux_extreme` for the watershed, they are all arround 5
 
 However, if you take a closer look at the time series for flux and 95th percentile, you can see that there are some differences.
 
-![Estero_95.png](imgs/Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png)
+![Estero_95.png](imgs/Estero\ Nongue\ Frente\ U.\ Del\ Bio\ Bio_flux_flux_95.png)
 
-![Rio_95.png](imgs/Rio Bureo En Mulchen_flux_flux_95.png)
+![Rio_95.png](imgs/Rio\ Bureo\ En\ Mulchen_flux_flux_95.png)
 
 You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, if rare events that are only 2 to 3 time bigger than the 95th percentile.
 
@@ -238,9 +238,11 @@ All last 1 days variables are really important, temperature max doesn't seem to 
 
 b) If we wanted to identify at least 70% of the extreme flux events, which are the metrics of your model for that threshold? It is a useful model?
 
-We need to have 70% of True Positive Rate(or sensitivity). If we plot the Threshold x True Positive Rate, we can see that the we need to choose threshold of 0.542. If we pick any number below our current threshold, we will get more positive cases (so we can identify over 70%) but we will also have a higher chance of having false positives. 
+We need to have 70% of True Positive Rate(known as recall or sensitivity). If we plot the Threshold x True Positive Rate, we can see that the we need to choose threshold of 0.542. If we pick any number below our current threshold, we will get more positive cases (so we can identify over 70%) but we will also have a higher chance of having false positives. 
 
 ![imgs/threshold]("imgs/threshold.png")
+
+My suggestion is to maximize True Positive rate - False Positive Rate
 
 
 
