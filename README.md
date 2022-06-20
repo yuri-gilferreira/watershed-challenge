@@ -194,7 +194,7 @@ I divided my dataset in 3:
  - Test Set - 20% of my data from 1980-01-01 to 2010-01-01
  - Holdout Set - 100% of my data from 2010-01-01 to 2020-01-01
  
-I discarded any data from 2020 onwards because the the number of observations changed drastically in this time period.
+I discarded any data from 2020 onwards because the number of observations changed drastically in this time period.
 
 ##### Features
 
