@@ -243,6 +243,9 @@ We need to have 70% of True Positive Rate(known as recall or sensitivity). If we
 
 ![imgs/threshold](imgs/threshold.png)
 
+We can pick our threshold to maximize for TPR - FPR instead! Then we have value of ~ 0.036.
+
+![imgs/threshold_max](imgs/threshold_max.png)
 
 
 It is a useful model to predict next day flux_extreme events for sure!
