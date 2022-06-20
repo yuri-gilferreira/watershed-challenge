@@ -1,7 +1,5 @@
 # Watershed Challenge
-Trying to predict flux 
 
-## Summary
 
 This repository main goal is to answer questions regarding climate changes. We will try to predict extreme watershed events in Chile. We will follow questions and instructions provided by the [watershed challenge](https://github.com/SpikeLab-CL/challenge_watershed#important-points-to-take-into-account).
 
@@ -65,6 +63,8 @@ One side note is that the there is a huge drop on the number of observation by t
   def plot_three_timeseries(cod_station, min_date, max_date):
     # Set Figure size    
     sns.set(rc={'figure.figsize':(12,8)})
+    
+    # Query data from cod_station and time interval    
     df = data[(data["gauge_name"] == cod_station)
              &(data['date'] >= min_date)
              &(data['date'] <= max_date)].copy()
@@ -102,17 +102,19 @@ One side note is that the there is a huge drop on the number of observation by t
     plt.show()
     return ax    
   ```
+![plt_three_timeseries_example](imgs/plt_three_timeseries_example.png)
   
 4. Create three variables called:
 
  - flux_extreme
  - temp_extreme
  - precip_extreme
+ <br>
 This variables should take the value of 1 when that variable in a specific day was extreme. Being extreme could be considered as being greater than expected. For example, a flux can be considered as extreme (value 1) when is over the 95 percentile of the flux distribution for that specific season, and takes the value 0 otherwise. Taking into account the seasonality of that variables is very important, because  could be considered as extreme in wintertime, but it’d be a normal temperature for summertime.
 
 
 
-First I created my seasons using meteorological seasons. Most of our study here is about climate behavior, using astronomical seasons is not logical.
+First I created my seasons using meteorological seasons. Most of our study here is about climate behavior, using astronomical seasons is not logical. Also, all the watershed are located in the south hemisphere, so they have the same seasons.
 
 ```python
 seasons = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1]
@@ -120,7 +122,7 @@ month_to_season = dict(zip(range(1,13), seasons))
 data['season'] = data.date.dt.month.map(month_to_season)
 ```
 
-The I created a function and applied it to the 3 different variables:
+Afterwards, I created a function and applied it to the 3 different variables:
  ```python
  def extreme(df, variable):
     # Get 95th quantile for each watershed station/season
@@ -133,13 +135,60 @@ The I created a function and applied it to the 3 different variables:
     
     # Compare variable to 95th percentile
     df[variable + '_extreme'] = (df[variable] >  df[variable + "_95"])*1
-    df = df.drop(columns = [variable + "_95", ])
     return df
  ```
-
+ 
+I kept the columns `season` and `_95` because I will use them later on.
 
 
 Do you consider this a good way of capturing extreme events? Or you would have used a different method? Which one?
   
-That is a reasonable way to capture extreme events. We can use standard deviations distance as well (if the data distribution is normal). There is just one small concern regarding extreme temperatues. Using the 95th percentile, we are discarding *extreme low events*. We might as well use 95th *and* 5th percentile for temperature instead.
+That is a reasonable way to capture extreme events. We can use standard deviations distance as well (if the data distribution is normal). There is just one small concern regarding extreme temperatues. Using the 95th percentile, we are discarding **extreme low events**. We might as well use 95th **and 5th percentile** for temperature instead.
+
+
+5. Plot the variable flux_extreme. Are there any different behaviours among different watersheds?
+
+For this part, I did not plot all the watersheds because there were over 500 different watersheds. Instead I randomly picked 10 different watersheds and analyzed their differences instead.
+
+If you plot the average `flux_extreme` for the watershed, they are all arround 5% (as expected of the 95th percentile).
+
+![10_flux_extreme](imgs/10_flux_extreme.png)
+
+However, if you take a closer look at the time series for flux and 95th percentile, you can see that there are some differences.
+
+![Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png](imgs/Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png)
+
+![Rio Bureo En Mulchen_flux_flux_95.png](imgs/Rio Bureo En Mulchen_flux_flux_95.png)
+
+You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, if rare events that are only 2 to 3 time bigger than the 95th percentile.
+
+6. Plot the percentage of extreme events during time. Have they become more frequent?
+
+If you just plot daily extreme events, the data is very noisy and we can't see any clear patterns.
+
+![flux_extreme_daily]("imgs/flux_extreme_extreme_overall.png")
+
+However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening. Looks like the overall:
+
+ - **max temperature extreme is increasing**
+ - **flux extreme is decreasing **
+ - **precipitation extreme is decreasing**
+
+![temp_max_extreme_10years]("imgs/temp_max_extreme_yearly_10year.png")
+![flux_extreme_10years]("imgs/flux_extreme_yearly_10year.png")
+![precip_extreme_10years]("imgs/precip_extreme_yearly_10year.png")
+
+
+7.Extreme flux prediction. Train one or many models (using your preferred algorithms) for estimating the probability of having an extreme flux. Feel free to create new features or use external variables. Some of the discussion we would like to see: Which data can be used and which cannot? Of course, we cannot use future data, but what about data from the same day? Or from the previous day?
+<br>
+Everything depends on how you propose the model use. Make a proposal on how you would use the model in practice (for example, once trained, the model will predict next day probability). Depending on your proposal, set constraints about which variables you can or cannot use.
+
+From my point of view, it would be really hard to use real time data of precipitation and temperature, but we can still use data from the previous day to predict next day probability. Therefore, I created several new features:
+
+ - Features of cumulative precipitation, temp_max and flux for last 1, 3 and 7 days
+ - Features of precipitation over area for last 1, 3 7 days
+ 
+I also needed to recalculate the 95th percentile for the **training set only**.
+
+
 
