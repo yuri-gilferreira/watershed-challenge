@@ -170,7 +170,7 @@ If you just plot daily extreme events, the data is very noisy and we can't see a
 
 However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening. Looks like the overall:
 
- - **max temperature extreme is increasing*
+ - **max temperature extreme is increasing**
 ![temp_max_extreme_10years]("imgs/temp_max_extreme_yearly_10year.png")
 
  - **flux extreme is decreasing**
@@ -186,15 +186,6 @@ Everything depends on how you propose the model use. Make a proposal on how you 
 
 #### Modeling
 
-##### Features
-
-From my point of view, it would be really hard to use real time data of precipitation and temperature, but we can still use data from the previous day to predict next day probability. Therefore, I created several new features:
-
- - Features of cumulative precipitation, temp_max and flux for last 1, 3 and 7 days
- - Features of precipitation over area for last 1, 3 7 days
- 
-I also needed to recalculate the 95th percentile for each variable in the **training set only**.
-
 ##### Data Splitting
 
 I divided my dataset in 3:
@@ -204,11 +195,54 @@ I divided my dataset in 3:
  
 I discarded any data from 2020 onwards because the the number of observations changed drastically in this time period.
 
+##### Features
+
+From my point of view, it would be really hard to use real time data of precipitation and temperature, but we can still use data from the previous day to predict next day probability. Therefore, I created several new features:
+
+ - Features of cumulative precipitation, temp_max and flux for last 1, 3 and 7 days
+ - Features of precipitation over area for last 1, 3 7 days
+ 
+I also needed to recalculate the 95th percentile for each variable in the **training set only**
+
 ##### Training
 
 I used LightGBM algorithim framework with default parameters. I did not perform any kind of hyperparemeter tuning because I felt that unecessary.
 
+8.Analyze the model results.
+
+a) What is the performance of the model? Which metrics you consider are the best suited for this problem? What are the most important variables? What do you think about the results?
+
+The performance of the model is really optimistic:
+
+| Split | AUC | LogLoss|
+|-------|:---:|:-------|
+| Train| 0.982|0.0590|
+| Test| 0.981| 0.062|
+| Holdout|0.978 |0.047|
+
+I think the most important metric would be ROC-AUC, because we want to maximize the True Positive Rate and minimize False Positive Rate. 
+
+We can see feature importance using SHAP:
+
+![shap_bar]("imgs/shap_bar.png")
+
+The 5 most important features are:
+
+ - flux_last_1_days - flux of the last day
+ - flux_95 - 95th percentile flux for this watershed/season
+ - precip_last_1_days - precipitation of the last day
+ - flux_extreme_last_1_days - if the last day was a flux extreme event or not
+ - precip_95 - 95th percentile precipitation for this watershed/season
+ 
+All last 1 days variables are really important, temperature max doesn't seem to mather to the model. I do think the results are unreal. It might be harder to predict if we don't have the last day data or to forecast more than the next day. I wonder how well this model would perform if we want to predict the next 5 days instead.
+
+b) If we wanted to identify at least 70% of the extreme flux events, which are the metrics of your model for that threshold? It is a useful model?
+
+We need to have 70% of True Positive Rate(or sensitivity). If we plot the Threshold x True Positive Rate, we can see that the we need to choose threshold of 0.542. If we pick any number below our current threshold, we will get more positive cases (so we can identify over 70%) but we will also have a higher chance of having false positives. 
+
+![imgs/threshold]("imgs/threshold.png")
 
 
 
+It is a useful model to predict next day flux_extreme events for sure!
 
