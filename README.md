@@ -156,11 +156,12 @@ If you plot the average `flux_extreme` for the watershed, they are all arround 5
 
 However, if you take a closer look at the time series for flux and 95th percentile, you can see that there are some differences.
 
-![Estero_95.png](imgs/Estero&#32;Nongue&#32;Frente&#32;U.&#32;Del&#32;Bio&#32;Bio_flux_flux_95.png)
+![Estero_95.png](imgs/Estero%20Nonguen%20Frente%20U.%20Del%20Bio%20Bio_flux_flux_95.png)
+
 
 ![Rio_95.png](imgs/Rio&#32;Bureo&#32;En&#32;Mulchen_flux_flux_95.png)
 
-You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, if rare events that are only 2 to 3 time bigger than the 95th percentile.
+You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, with rare events that are only 2 to 3 time bigger than the 95th percentile.
 
 6. Plot the percentage of extreme events during time. Have they become more frequent?
 
@@ -168,7 +169,7 @@ If you just plot daily extreme events, the data is very noisy and we can't see a
 
 ![flux_extreme_daily](imgs/flux_extreme_overall.png)
 
-However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening. Looks like the overall:
+However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening:
 
  - **max temperature extreme is increasing**
 ![temp_max_extreme_10years](imgs/temp_max_extreme_yearly_10year.png)
