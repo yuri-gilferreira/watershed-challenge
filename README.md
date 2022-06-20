@@ -156,9 +156,9 @@ If you plot the average `flux_extreme` for the watershed, they are all arround 5
 
 However, if you take a closer look at the time series for flux and 95th percentile, you can see that there are some differences.
 
-![Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png](imgs/Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png)
+![Estero_95.png](imgs/Estero Nonguen Frente U. Del Bio Bio_flux_flux_95.png)
 
-![Rio Bureo En Mulchen_flux_flux_95.png](imgs/Rio Bureo En Mulchen_flux_flux_95.png)
+![Rio_95.png](imgs/Rio Bureo En Mulchen_flux_flux_95.png)
 
 You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, if rare events that are only 2 to 3 time bigger than the 95th percentile.
 
@@ -166,16 +166,17 @@ You can see that for Estero, there are some really extreme flux events that are 
 
 If you just plot daily extreme events, the data is very noisy and we can't see any clear patterns.
 
-![flux_extreme_daily]("imgs/flux_extreme_extreme_overall.png")
+![flux_extreme_daily]("imgs/flux_extreme_overall.png")
 
 However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening. Looks like the overall:
 
- - **max temperature extreme is increasing**
- - **flux extreme is decreasing **
- - **precipitation extreme is decreasing**
-
+ - **max temperature extreme is increasing*
 ![temp_max_extreme_10years]("imgs/temp_max_extreme_yearly_10year.png")
+
+ - **flux extreme is decreasing**
 ![flux_extreme_10years]("imgs/flux_extreme_yearly_10year.png")
+
+ - **precipitation extreme is decreasing**
 ![precip_extreme_10years]("imgs/precip_extreme_yearly_10year.png")
 
 
@@ -183,12 +184,31 @@ However if we take the yearly moving average value and 10 years moving average v
 <br>
 Everything depends on how you propose the model use. Make a proposal on how you would use the model in practice (for example, once trained, the model will predict next day probability). Depending on your proposal, set constraints about which variables you can or cannot use.
 
+#### Modeling
+
+##### Features
+
 From my point of view, it would be really hard to use real time data of precipitation and temperature, but we can still use data from the previous day to predict next day probability. Therefore, I created several new features:
 
  - Features of cumulative precipitation, temp_max and flux for last 1, 3 and 7 days
  - Features of precipitation over area for last 1, 3 7 days
  
-I also needed to recalculate the 95th percentile for the **training set only**.
+I also needed to recalculate the 95th percentile for each variable in the **training set only**.
+
+##### Data Splitting
+
+I divided my dataset in 3:
+ - Training Set - 80% of my data from 1980-01-01 to 2010-01-01
+ - Test Set - 20% of my data from 1980-01-01 to 2010-01-01
+ - Holdout Set - 100% of my data from 2010-01-01 to 2020-01-01
+ 
+I discarded any data from 2020 onwards because the the number of observations changed drastically in this time period.
+
+##### Training
+
+I used LightGBM algorithim framework with default parameters. I did not perform any kind of hyperparemeter tuning because I felt that unecessary.
+
+
 
 
 
