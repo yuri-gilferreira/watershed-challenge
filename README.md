@@ -166,18 +166,18 @@ You can see that for Estero, there are some really extreme flux events that are 
 
 If you just plot daily extreme events, the data is very noisy and we can't see any clear patterns.
 
-![flux_extreme_daily]("imgs/flux_extreme_overall.png")
+![flux_extreme_daily](imgs/flux_extreme_overall.png)
 
 However if we take the yearly moving average value and 10 years moving average value, we can see some trends happening. Looks like the overall:
 
  - **max temperature extreme is increasing**
-![temp_max_extreme_10years]("imgs/temp_max_extreme_yearly_10year.png")
+![temp_max_extreme_10years](imgs/temp_max_extreme_yearly_10year.png)
 
  - **flux extreme is decreasing**
-![flux_extreme_10years]("imgs/flux_extreme_yearly_10year.png")
+![flux_extreme_10years](imgs/flux_extreme_yearly_10year.png)
 
  - **precipitation extreme is decreasing**
-![precip_extreme_10years]("imgs/precip_extreme_yearly_10year.png")
+![precip_extreme_10years](imgs/precip_extreme_yearly_10year.png)
 
 
 7.Extreme flux prediction. Train one or many models (using your preferred algorithms) for estimating the probability of having an extreme flux. Feel free to create new features or use external variables. Some of the discussion we would like to see: Which data can be used and which cannot? Of course, we cannot use future data, but what about data from the same day? Or from the previous day?
@@ -224,7 +224,7 @@ I think the most important metric would be ROC-AUC, because we want to maximize 
 
 We can see feature importance using SHAP:
 
-![shap_bar]("imgs/shap_bar.png")
+![shap_bar](imgs/shap_bar.png)
 
 The 5 most important features are:
 
@@ -240,7 +240,7 @@ b) If we wanted to identify at least 70% of the extreme flux events, which are t
 
 We need to have 70% of True Positive Rate(known as recall or sensitivity). If we plot the Threshold x True Positive Rate, we can see that the we need to choose threshold of 0.542. If we pick any number below our current threshold, we will get more positive cases (so we can identify over 70%) but we will also have a higher chance of having false positives. 
 
-![imgs/threshold]("imgs/threshold.png")
+![imgs/threshold](imgs/threshold.png)
 
 My suggestion is to maximize True Positive rate - False Positive Rate
 
