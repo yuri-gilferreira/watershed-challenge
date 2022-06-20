@@ -156,9 +156,9 @@ If you plot the average `flux_extreme` for the watershed, they are all arround 5
 
 However, if you take a closer look at the time series for flux and 95th percentile, you can see that there are some differences.
 
-![Estero_95.png](imgs/Estero\ Nongue\ Frente\ U.\ Del\ Bio\ Bio_flux_flux_95.png)
+![Estero_95.png](imgs/Estero&#32;Nongue&#32;Frente&#32;U.&#32;Del&#32;Bio&#32;Bio_flux_flux_95.png)
 
-![Rio_95.png](imgs/Rio\ Bureo\ En\ Mulchen_flux_flux_95.png)
+![Rio_95.png](imgs/Rio&#32;Bureo&#32;En&#32;Mulchen_flux_flux_95.png)
 
 You can see that for Estero, there are some really extreme flux events that are 6 to 7 bigger than the 95th percentile. On the other hand, we have Rio Buero, if rare events that are only 2 to 3 time bigger than the 95th percentile.
 
@@ -180,7 +180,7 @@ However if we take the yearly moving average value and 10 years moving average v
 ![precip_extreme_10years](imgs/precip_extreme_yearly_10year.png)
 
 
-7.Extreme flux prediction. Train one or many models (using your preferred algorithms) for estimating the probability of having an extreme flux. Feel free to create new features or use external variables. Some of the discussion we would like to see: Which data can be used and which cannot? Of course, we cannot use future data, but what about data from the same day? Or from the previous day?
+7. Extreme flux prediction. Train one or many models (using your preferred algorithms) for estimating the probability of having an extreme flux. Feel free to create new features or use external variables. Some of the discussion we would like to see: Which data can be used and which cannot? Of course, we cannot use future data, but what about data from the same day? Or from the previous day?
 <br>
 Everything depends on how you propose the model use. Make a proposal on how you would use the model in practice (for example, once trained, the model will predict next day probability). Depending on your proposal, set constraints about which variables you can or cannot use.
 
@@ -200,15 +200,15 @@ I discarded any data from 2020 onwards because the the number of observations ch
 From my point of view, it would be really hard to use real time data of precipitation and temperature, but we can still use data from the previous day to predict next day probability. Therefore, I created several new features:
 
  - Features of cumulative precipitation, temp_max and flux for last 1, 3 and 7 days
- - Features of precipitation over area for last 1, 3 7 days
+ - Features of precipitation over area for last 1, 3 and 7 days
  
-I also needed to recalculate the 95th percentile for each variable in the **training set only**
+I also needed to recalculate the 95th percentile for each variable in the **training set only**.
 
 ##### Training
 
 I used LightGBM algorithim framework with default parameters. I did not perform any kind of hyperparemeter tuning because I felt that unecessary.
 
-8.Analyze the model results.
+8. Analyze the model results.
 
 a) What is the performance of the model? Which metrics you consider are the best suited for this problem? What are the most important variables? What do you think about the results?
 
@@ -241,8 +241,6 @@ b) If we wanted to identify at least 70% of the extreme flux events, which are t
 We need to have 70% of True Positive Rate(known as recall or sensitivity). If we plot the Threshold x True Positive Rate, we can see that the we need to choose threshold of 0.542. If we pick any number below our current threshold, we will get more positive cases (so we can identify over 70%) but we will also have a higher chance of having false positives. 
 
 ![imgs/threshold](imgs/threshold.png)
-
-My suggestion is to maximize True Positive rate - False Positive Rate
 
 
 
