@@ -5,7 +5,7 @@ This repository main goal is to answer questions regarding climate changes. We w
 
 ## Dataset
 
-The database contains the following variables between others:
+The database contains the following variables, among others:
 
  - date: date of measurement
  - basin_id: station code
@@ -114,7 +114,7 @@ This variables should take the value of 1 when that variable in a specific day w
 
 
 
-First I created my seasons using meteorological seasons. Most of our study here is about climate behavior, using astronomical seasons is not logical. Also, all the watershed are located in the south hemisphere, so they have the same seasons.
+First I created my seasons using meteorological calendar. Most of our study here is about climate behavior, using astronomical calendar is not logical. Also, all the watershed are located in the south hemisphere, so they should have the same seasons.
 
 ```python
 seasons = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 1]
@@ -148,7 +148,7 @@ That is a reasonable way to capture extreme events. We can use standard deviatio
 
 5. Plot the variable flux_extreme. Are there any different behaviours among different watersheds?
 
-For this part, I did not plot all the watersheds because there were over 500 different watersheds. Instead I randomly picked 10 different watersheds and analyzed their differences instead.
+For this part, I did not plot all the watersheds because there were over 500 different watersheds. Instead, I randomly picked 10 different watersheds and analyzed their differences.
 
 If you plot the average `flux_extreme` for the watershed, they are all arround 5% (as expected of the 95th percentile).
 
